@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d681d215ace857f46863a444ec5e4ed4, type: 3}
+  m_Name: LevelData 30
+  m_EditorClassIdentifier: 
+  targetWords:
+  - COWS
+  - ASHES
+  - WORD
+  - PLATE
+  - TICKET
+  wordToBeFound: 5
+  level: 30
+  isVertical: 1
+  isVerticalInvert: 0
+  isHorizontal: 1
+  isHorizontalInvert: 0
+  isDiagonal1: 0
+  isDiagonal1Invert: 0
+  isDiagonal2: 0
+  isDiagonal2Invert: 0
+  verticalPlacements:
+  - {x: 10, y: 3}
+  - {x: 11, y: 1}
+  - {x: 12, y: 0}
+  - {x: 6, y: 4}
+  verticalInvertPlacements: []
+  horizontalPlacements:
+  - {x: 42, y: 2}
+  horizontalInvertPlacements: []
+  diagonal1Placements: []
+  diagonal2Placements: []
+  diagonal1InvertPlacements: []
+  diagonal2InvertPlacements: []
