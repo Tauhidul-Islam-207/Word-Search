@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
+    
+    public AudioSource click;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +20,22 @@ public class LobbyManager : MonoBehaviour
         
     }
 
+    public void WordSearch()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
     public void PlayWordSearch()
     {
-        SceneManager.LoadScene("Menu");
+        click.Play();
+        Invoke("WordSearch", 0.5f);
+    }
+
+    
+    public void ExitApp()
+    {
+        click.Play();
+        Invoke("ExitApplication", 0.5f);
     }
 
     public void ExitApplication()

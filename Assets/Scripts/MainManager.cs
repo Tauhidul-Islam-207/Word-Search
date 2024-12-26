@@ -31,7 +31,8 @@ public class MainManager : MonoBehaviour
     private List<LineRenderer> permanentLines = new List<LineRenderer>();
     private Color customGreen = new Color(0.10196f, 1.0f, 0.0f, 0.88235f);
     private Color correctGreen = new Color(0.0f, 0.27451f, 0.0f, 1.0f);
-    
+    public AudioSource click;
+    public AudioSource matchCorrect;
 
     
     void Start()
@@ -82,11 +83,12 @@ public class MainManager : MonoBehaviour
                     if(targetWords.Contains(formedWord) && !foundWords.Contains(formedWord))
                     {
                         Debug.Log("Succcess!");
+                        matchCorrect.Play();
                         wordToBeFound--;
                         foreach(TextMeshPro txt in connectedWords)
                         {
                             greenWords.Add(txt);
-                            //txt.color = Color.green;
+                            //txt.color = Color.black;
                             txt.color = correctGreen;
                             //txt.GetComponentInChildren<SpriteRenderer>().color = Color.black;
                         }
@@ -217,13 +219,13 @@ public class MainManager : MonoBehaviour
             {
                 if(greenWords.Contains(txt))
                 {
-                    //txt.color = Color.green;
+                    //txt.color = Color.black;
                     txt.color = correctGreen;
                     //txt.GetComponentInChildren<SpriteRenderer>().color = Color.black;
                 }
                 else
                 {
-                    txt.color = Color.black;
+                    txt.color = Color.white;
                     //txt.GetComponentInChildren<SpriteRenderer>().color = Color.white;
                 }    
             }
@@ -246,7 +248,7 @@ public class MainManager : MonoBehaviour
             if(reserveIndex < reserveWords.Count)
             {
                 dispWords[foundWordIndex].text = reserveWords[reserveIndex];
-                dispWords[foundWordIndex].color = Color.black;
+                dispWords[foundWordIndex].color = Color.white;
                 reserveIndex++;
             }
         }
@@ -270,10 +272,25 @@ public class MainManager : MonoBehaviour
         }
     }
 
-    public void ReturnToMenu()
+    public void ReturnToLobby()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Lobby");
     }
+
+    
+    // public void RestartCurrentLevel()
+    // {
+    //     ResetLevel();
+    //     targetWords = levelData[startIndex].targetWords;
+    //     wordToBeFound = levelData[startIndex].wordToBeFound;
+    //     level = levelData[startIndex].level;
+    //     UpdateLevelText();
+    //     UpdateRemainingWordsText();
+    //     GenerateRandomMatrix();
+    //     PlaceAnswers();
+    //     FillDispWords();
+    // }
+
 
     public void GoToNextLevel()
     {
@@ -295,18 +312,18 @@ public class MainManager : MonoBehaviour
         {
             Debug.Log("Game Completed");
             startIndex = 0;
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("Lobby");
         }
     }
 
     public void UpdateLevelText()
     {
-        levelText.text = "Level " + level.ToString();
+        levelText.text = "Level : " + level.ToString();
     }
 
     public void UpdateRemainingWordsText()
     {
-        remainWordText.text = "Words Remaining " + wordToBeFound.ToString();
+        remainWordText.text = "Words Remaining : " + wordToBeFound.ToString();
     }
 
     public void FillDispWords()
@@ -331,7 +348,7 @@ public class MainManager : MonoBehaviour
         foreach(TextMeshPro word in wordMatrix)
         {
             word.text = "";
-            word.color = Color.black;
+            word.color = Color.white;
             //word.GetComponentInChildren<SpriteRenderer>().color = Color.white;
         }
 
@@ -339,7 +356,7 @@ public class MainManager : MonoBehaviour
         {
             disptext.text = "";
             disptext.transform.GetChild(0).gameObject.SetActive(false);
-            disptext.color = Color.black;
+            disptext.color = Color.white;
         }
 
         formedWord = "";
@@ -453,5 +470,17 @@ public class MainManager : MonoBehaviour
         {
             line.positionCount = 0;
         }
+    }
+
+    public void NextLevelClick()
+    {
+        click.Play();
+        Invoke("GoToNextLevel", 0.5f);
+    }
+
+    public void LobbyClick()
+    {
+        click.Play();
+        Invoke("ReturnToLobby", 0.5f);
     }
 }
