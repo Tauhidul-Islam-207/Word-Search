@@ -17,7 +17,7 @@ public class MainManager : MonoBehaviour
     private List<TextMeshPro> greenWords = new List<TextMeshPro>();
     public List<TextMeshPro> wordMatrix;
     public List<TextMeshPro> dispWords; 
-    public Button nextLvlButton;
+    //public Button nextLvlButton;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI remainWordText;
     public List<LevelData> levelData; // This contains all the Level Data
@@ -65,6 +65,9 @@ public class MainManager : MonoBehaviour
             connectedWords.Clear();
             DeActivateDrawing();
             formedWord = "";
+            // UpdateLevelText();
+            // UpdateRemainingWordsText();
+            CheckLevelComplete();
         }
 
         if (isDragging)
@@ -116,9 +119,9 @@ public class MainManager : MonoBehaviour
             }
 
             DrawLine();
-            CheckLevelComplete();
             UpdateLevelText();
             UpdateRemainingWordsText();
+            //CheckLevelComplete();
         }
     }
 
@@ -271,8 +274,8 @@ public class MainManager : MonoBehaviour
     {
         if(wordToBeFound == 0)
         {
-            nextLvlButton.gameObject.SetActive(true);
-            //Invoke("NextLevelClick", 2.0f);
+            //nextLvlButton.gameObject.SetActive(true);
+            NextLevelClick();
         }
     }
 
@@ -380,7 +383,7 @@ public class MainManager : MonoBehaviour
         permanentLines.Clear();
         reserveIndex = 0;
         foundWordIndex = 0;
-        nextLvlButton.gameObject.SetActive(false);
+        //nextLvlButton.gameObject.SetActive(false);
     }
 
     public void PlaceAnswers()
@@ -484,7 +487,7 @@ public class MainManager : MonoBehaviour
     public void NextLevelClick()
     {
         click.Play();
-        Invoke("GoToNextLevel", 0.5f);
+        Invoke("GoToNextLevel", 1.0f);
     }
 
     public void LobbyClick()
