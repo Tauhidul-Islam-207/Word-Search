@@ -241,6 +241,7 @@ public class MainManager : MonoBehaviour
                 if(dispWords[i].text == word)
                 {
                     dispWords[i].color = Color.green;
+                    dispWords[i].transform.GetChild(1).gameObject.SetActive(true);
                     foundWordIndex = i;
                 }
             }
@@ -248,6 +249,7 @@ public class MainManager : MonoBehaviour
             if(reserveIndex < reserveWords.Count)
             {
                 dispWords[foundWordIndex].text = reserveWords[reserveIndex];
+                dispWords[foundWordIndex].transform.GetChild(1).gameObject.SetActive(false);
                 dispWords[foundWordIndex].color = Color.white;
                 reserveIndex++;
             }
@@ -259,6 +261,7 @@ public class MainManager : MonoBehaviour
                 if(txt.text == word)
                 {
                     txt.color = Color.green;
+                    txt.transform.GetChild(1).gameObject.SetActive(true);
                 }
             }
         }
@@ -269,6 +272,7 @@ public class MainManager : MonoBehaviour
         if(wordToBeFound == 0)
         {
             nextLvlButton.gameObject.SetActive(true);
+            //Invoke("NextLevelClick", 2.0f);
         }
     }
 
@@ -330,9 +334,12 @@ public class MainManager : MonoBehaviour
     {
         for(int i = 0; i < dispWords.Count && i < targetWords.Count; i++)
         {
+            dispWords[i].gameObject.SetActive(true);
             dispWords[i].text = targetWords[i];
             dispWords[i].transform.GetChild(0).gameObject.SetActive(true);
         }
+
+
             
         if(targetWords.Count > dispWords.Count)
         {
@@ -356,7 +363,9 @@ public class MainManager : MonoBehaviour
         {
             disptext.text = "";
             disptext.transform.GetChild(0).gameObject.SetActive(false);
+            disptext.transform.GetChild(1).gameObject.SetActive(false);
             disptext.color = Color.white;
+            disptext.gameObject.SetActive(false);
         }
 
         formedWord = "";
