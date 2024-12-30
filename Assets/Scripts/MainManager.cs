@@ -33,8 +33,10 @@ public class MainManager : MonoBehaviour
     private Color correctGreen = new Color(0.0f, 0.27451f, 0.0f, 1.0f);
     public AudioSource click;
     public AudioSource matchCorrect;
+    public GameObject messageScreen;
+    public GameObject messagePanel;
 
-    
+
     void Start()
     {
         ResetLevel();
@@ -495,4 +497,19 @@ public class MainManager : MonoBehaviour
         click.Play();
         Invoke("ReturnToLobby", 0.5f);
     }
+
+    public void HowToPlayClick()
+    {
+        click.Play();
+        messageScreen.SetActive(true);
+        messagePanel.SetActive(true);
+    }
+
+    public void CloseMessage()
+    {
+        click.Play();
+        messageScreen.SetActive(false);
+        messagePanel.SetActive(false);
+    }
+
 }
