@@ -17,7 +17,6 @@ public class MainManager : MonoBehaviour
     private List<TextMeshPro> greenWords = new List<TextMeshPro>();
     public List<TextMeshPro> wordMatrix;
     public List<TextMeshPro> dispWords; 
-    //public Button nextLvlButton;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI remainWordText;
     public List<LevelData> levelData; // This contains all the Level Data
@@ -35,8 +34,10 @@ public class MainManager : MonoBehaviour
     public AudioSource matchCorrect;
     public GameObject messageScreen;
     public GameObject messagePanel;
+    public GameObject settingScreen;
 
 
+    // Start is called before the first frame update
     void Start()
     {
         ResetLevel();
@@ -51,6 +52,8 @@ public class MainManager : MonoBehaviour
         FillDispWords();
     }
 
+    
+    // Update is called once per frame
     void Update()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -67,11 +70,8 @@ public class MainManager : MonoBehaviour
             connectedWords.Clear();
             DeActivateDrawing();
             formedWord = "";
-            // UpdateLevelText();
-            // UpdateRemainingWordsText();
             CheckLevelComplete();
         }
-
         if (isDragging)
         {
             Collider2D[] hitColliders = Physics2D.OverlapPointAll(mousePosition);
@@ -93,9 +93,7 @@ public class MainManager : MonoBehaviour
                         foreach(TextMeshPro txt in connectedWords)
                         {
                             greenWords.Add(txt);
-                            //txt.color = Color.black;
                             txt.color = correctGreen;
-                            //txt.GetComponentInChildren<SpriteRenderer>().color = Color.black;
                         }
                         
                         LineRenderer newLine = Instantiate(line, line.transform.parent);
@@ -114,7 +112,6 @@ public class MainManager : MonoBehaviour
                         foreach(TextMeshPro txt in connectedWords)
                         {
                             txt.color = Color.blue;
-                            //txt.GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
                         }
                     }
                 }
@@ -123,16 +120,17 @@ public class MainManager : MonoBehaviour
             DrawLine();
             UpdateLevelText();
             UpdateRemainingWordsText();
-            //CheckLevelComplete();
         }
     }
 
+    //This method is used to generate a random alphabet.
     public string GenerateRandomAlphabet()
     {
         char randomAlphabet = (char)('A' + Random.Range(0, 26));
         return randomAlphabet.ToString();
     }
 
+    //This method is used to generate a random alphabet matrix in the grid.
     public void GenerateRandomMatrix()
     {
         foreach(TextMeshPro let in wordMatrix)
@@ -144,6 +142,7 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    //This method is used to place words vertically.
     public void PlaceWordVertical(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -153,6 +152,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words vertically in an inverted way.
     public void PlaceWordVerticalInvert(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -162,6 +163,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words horizontally.
     public void PlaceWordHorizontal(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -171,6 +174,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words horizontally in an inverted way.
     public void PlaceWordHorizontalInvert(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -180,6 +185,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words in diagonal 1.
     public void PlaceWordDiagonal1(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -189,6 +196,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words in diagonal 1 in a inverted way.
     public void PlaceWordDiagonal1Invert(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -198,6 +207,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words in diagonal 2.
     public void PlaceWordDiagonal2(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -207,6 +218,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to place words in diagonal 2 in a inverted way.
     public void PlaceWordDiagonal2Invert(int count, int index)
     {
         foreach(char i in targetWords[index])
@@ -216,6 +229,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to revert the color of selected word.
     public void CheckTextColor()
     {
         foreach(TextMeshPro txt in connectedWords)
@@ -224,19 +239,18 @@ public class MainManager : MonoBehaviour
             {
                 if(greenWords.Contains(txt))
                 {
-                    //txt.color = Color.black;
                     txt.color = correctGreen;
-                    //txt.GetComponentInChildren<SpriteRenderer>().color = Color.black;
                 }
                 else
                 {
                     txt.color = Color.white;
-                    //txt.GetComponentInChildren<SpriteRenderer>().color = Color.white;
                 }    
             }
         }        
     }
 
+    
+    //This method is used to change the color and visual of the displayed target words if they are found.
     public void ChangeDispWordColor(string word)
     {       
         if(targetWords.Count > dispWords.Count)
@@ -272,35 +286,25 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to check if a current level is complete.
     public void CheckLevelComplete()
     {
         if(wordToBeFound == 0)
         {
-            //nextLvlButton.gameObject.SetActive(true);
             NextLevelClick();
         }
     }
 
+    
+    // This method is used to return to the lobby.
     public void ReturnToLobby()
     {
         SceneManager.LoadScene("Lobby");
     }
 
     
-    // public void RestartCurrentLevel()
-    // {
-    //     ResetLevel();
-    //     targetWords = levelData[startIndex].targetWords;
-    //     wordToBeFound = levelData[startIndex].wordToBeFound;
-    //     level = levelData[startIndex].level;
-    //     UpdateLevelText();
-    //     UpdateRemainingWordsText();
-    //     GenerateRandomMatrix();
-    //     PlaceAnswers();
-    //     FillDispWords();
-    // }
-
-
+    //This method is used to go to the next level.
     public void GoToNextLevel()
     {
         startIndex++;
@@ -325,16 +329,22 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to update the level number in the display.
     public void UpdateLevelText()
     {
         levelText.text = "Level : " + level.ToString();
     }
 
+    
+    //This method is used to update the remaining words number in the display.
     public void UpdateRemainingWordsText()
     {
         remainWordText.text = "Words Remaining : " + wordToBeFound.ToString();
     }
 
+    
+    //This method is used to fill the display with target words.
     public void FillDispWords()
     {
         for(int i = 0; i < dispWords.Count && i < targetWords.Count; i++)
@@ -355,13 +365,14 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    // This method is used to reset all temporary data in current level.
     public void ResetLevel()
     {
         foreach(TextMeshPro word in wordMatrix)
         {
             word.text = "";
             word.color = Color.white;
-            //word.GetComponentInChildren<SpriteRenderer>().color = Color.white;
         }
 
         foreach(TextMeshPro disptext in dispWords)
@@ -377,7 +388,6 @@ public class MainManager : MonoBehaviour
         isDragging = false; 
         connectedWords.Clear();
         greenWords.Clear();
-        //targetWords.Clear();
         reserveWords.Clear();
         foundWords.Clear();
         drawPositions.Clear();
@@ -385,9 +395,10 @@ public class MainManager : MonoBehaviour
         permanentLines.Clear();
         reserveIndex = 0;
         foundWordIndex = 0;
-        //nextLvlButton.gameObject.SetActive(false);
     }
 
+    
+    //This method is used to place all words according to their positional data.
     public void PlaceAnswers()
     {
         if(levelData[startIndex].isVertical)
@@ -455,6 +466,8 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to draw a line using Line Renderer.
     public void DrawLine()
     {
         drawPositions.Clear();
@@ -471,6 +484,8 @@ public class MainManager : MonoBehaviour
         line.SetPositions(drawPositions.ToArray());
     }
 
+    
+    //This method is used to clear a drawn line.
     public void DeActivateDrawing()
     {
         line.positionCount = 0;
@@ -478,6 +493,7 @@ public class MainManager : MonoBehaviour
         line.gameObject.SetActive(false);
     }
 
+    //This method is used to remove permanent green lines.
     public void RemoveGreenLines()
     {
         foreach(LineRenderer line in permanentLines)
@@ -486,18 +502,24 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    
+    //This method is used to initiate the next level transition.
     public void NextLevelClick()
     {
         click.Play();
         Invoke("GoToNextLevel", 1.0f);
     }
 
+    
+    //This method is used to initiate the game to lobby transition.
     public void LobbyClick()
     {
         click.Play();
         Invoke("ReturnToLobby", 0.5f);
     }
 
+    
+    //This method is used to open the "How to Play" Window.
     public void HowToPlayClick()
     {
         click.Play();
@@ -505,11 +527,25 @@ public class MainManager : MonoBehaviour
         messagePanel.SetActive(true);
     }
 
+    
+    //This method is used to close a message window.
     public void CloseMessage()
     {
         click.Play();
         messageScreen.SetActive(false);
         messagePanel.SetActive(false);
+        settingScreen.SetActive(false);
     }
 
+
+    //This method is used to open the settings window.
+    public void Settings()
+    {
+        click.Play();
+        messageScreen.SetActive(true);
+        settingScreen.SetActive(true);
+    }
 }
+
+
+

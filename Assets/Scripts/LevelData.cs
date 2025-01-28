@@ -25,3 +25,7 @@ public class LevelData : ScriptableObject
     public List<Vector2Int> diagonal1InvertPlacements; // Positions for diagonal words
     public List<Vector2Int> diagonal2InvertPlacements; // Positions for diagonal words
 }
+
+
+
+
